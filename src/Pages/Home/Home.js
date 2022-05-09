@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../../Shared/Footer';
 import Banner from './Banner';
 import DoctorSection from './DoctorSection';
 import InfoCards from './infoCards';
@@ -10,6 +11,7 @@ const Home = () => (
         <InfoCards />
         <Service />
         <DoctorSection />
+        <Footer />
     </div>
 );
 
