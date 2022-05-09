@@ -4,7 +4,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Nav = () => (
+const Navbar = () => (
     <nav className="container mx-auto">
         <div className="navbar bg-base-100">
             <div className="navbar-start">
@@ -33,7 +33,7 @@ const Nav = () => (
                         <Link to="/login">Login</Link>
                     </li>
                 </ul>
-                <div className="dropdown dropdown-end">
+                <div className="dropdown-end dropdown">
                     <label tabIndex="0" className="btn btn-ghost lg:hidden">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -79,4 +79,4 @@ const Nav = () => (
     </nav>
 );
 
-export default Nav;
+export default Navbar;

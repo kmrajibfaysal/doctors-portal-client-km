@@ -4,7 +4,7 @@ import marker from '../../assets/icons/marker.svg';
 import phone from '../../assets/icons/phone.svg';
 
 const InfoCards = () => (
-    <div className="container mx-auto mt-4 flex flex-col items-center justify-center space-y-4 space-x-0 md:flex-row md:space-y-0 md:space-x-5">
+    <div className="container mx-auto mt-24 flex flex-col items-center justify-center space-y-8 space-x-0 md:mt-6 md:flex-row md:space-y-0 md:space-x-5">
         <div className="card w-80 items-center justify-around bg-gradient-to-r from-secondary to-primary py-4  text-white shadow-xl md:w-96 md:flex-row md:py-1 md:px-5">
             <div>
                 <img src={clock} alt="" />

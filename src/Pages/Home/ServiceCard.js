@@ -4,7 +4,7 @@ import fluoride from '../../assets/images/fluoride.png';
 import whitening from '../../assets/images/whitening.png';
 
 const ServiceCard = () => (
-    <div className="flex w-full flex-col items-center justify-center space-y-6 md:flex-row md:space-y-0 md:space-x-6">
+    <div className="flex w-full flex-col items-center justify-center space-y-8 md:flex-row md:space-y-0 md:space-x-6">
         <div className="card w-96 items-center justify-center bg-base-100 shadow-md">
             <div>
                 <img src={fluoride} alt="Shoes" />
