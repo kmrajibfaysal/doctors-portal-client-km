@@ -1,12 +1,12 @@
 import React from 'react';
 import hero from '../../assets/images/chair.png';
 
-const Hero = () => (
+const Banner = () => (
     <div className="hero bg-opacity-50 bg-heroBg md:min-h-[750px]">
         <div className="hero-content flex-col lg:flex-row-reverse">
             <img
                 src={hero}
-                className="max-w-xs rounded-lg shadow-2xl  sm:max-w-sm lg:max-w-xl"
+                className="mx-10 w-full rounded-lg shadow-2xl md:mx-0  lg:max-w-xl"
                 alt="doctor"
             />
             <div>
@@ -26,4 +26,4 @@ const Hero = () => (
     </div>
 );
 
-export default Hero;
+export default Banner;

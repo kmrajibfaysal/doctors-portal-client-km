@@ -1,11 +1,13 @@
 import React from 'react';
-import Hero from './Hero';
+import Banner from './Banner';
 import InfoCards from './infoCards';
+import Service from './Service';
 
 const Home = () => (
     <div>
-        <Hero />
+        <Banner />
         <InfoCards />
+        <Service />
     </div>
 );
 
