@@ -17,3 +17,8 @@
     @apply rounded  py-2 hover:font-extrabold;
   }
 }
+
+.cardContainer div {
+  @apply w-80 md:w-96 ;
+}
+

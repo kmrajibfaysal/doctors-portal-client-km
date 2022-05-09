@@ -2,7 +2,7 @@ import React from 'react';
 import hero from '../../assets/images/chair.png';
 
 const Hero = () => (
-    <div className="hero bg-heroBg md:min-h-[750px]">
+    <div className="hero bg-opacity-50 bg-heroBg md:min-h-[750px]">
         <div className="hero-content flex-col lg:flex-row-reverse">
             <img
                 src={hero}
@@ -15,7 +15,10 @@ const Hero = () => (
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                     Ipsum has been the industry&apos;s standard dummy text ever since the
                 </p>
-                <button type="button" className="btn btn-primary">
+                <button
+                    type="button"
+                    className="btn transform border-0 bg-gradient-to-r from-secondary to-primary uppercase text-white hover:scale-105"
+                >
                     Get Started
                 </button>
             </div>
