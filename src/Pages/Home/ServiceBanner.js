@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import treatment from '../../assets/images/treatment.png';
+import MainButton from '../../Shared/MainButton';
 
 function ServiceBanner() {
     return (
@@ -21,12 +22,7 @@ function ServiceBanner() {
                     'Content here, content here', making it look like readable English. Many desktop
                     publishing packages and web page
                 </p>
-                <button
-                    type="button"
-                    className="btn transform border-0 bg-gradient-to-r from-secondary to-primary uppercase text-white hover:scale-105"
-                >
-                    Get Started
-                </button>
+                <MainButton title="Get Started" />
             </div>
         </div>
     );
