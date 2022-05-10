@@ -4,19 +4,21 @@ import Banner from './Banner';
 import Contact from './Contact';
 import DoctorSection from './DoctorSection';
 import InfoCards from './infoCards';
-import Service from './Service';
+import Services from './Services';
 import Testimonials from './Testimonials';
 
-const Home = () => (
-    <div>
-        <Banner />
-        <InfoCards />
-        <Service />
-        <DoctorSection />
-        <Testimonials />
-        <Contact />
-        <Footer />
-    </div>
-);
+function Home() {
+    return (
+        <div>
+            <Banner />
+            <InfoCards />
+            <Services />
+            <DoctorSection />
+            <Testimonials />
+            <Contact />
+            <Footer />
+        </div>
+    );
+}
 
 export default Home;
