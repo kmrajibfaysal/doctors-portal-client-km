@@ -3,11 +3,11 @@ import React from 'react';
 import doctor from '../../assets/images/doctor-small.png';
 import MainButton from '../../Shared/MainButton';
 
-function DoctorSection() {
+function Appointment() {
     return (
         <div className="bg-blueBg md:mt-32 md:h-[533px]">
             <div className="hero-content mx-auto mt-16 flex-col items-center md:mt-32 lg:flex-row-reverse">
-                <div className="order-1 hidden flex-1 md:order-2 md:block">
+                <div className="order-1 hidden flex-1 md:order-2 lg:block">
                     <img src={doctor} className="mt-[-107px]" alt="doctor" />
                 </div>
                 <div className="order-2 mt-5 flex-1 md:order-1 md:ml-16 md:max-w-lg">
@@ -27,4 +27,4 @@ function DoctorSection() {
     );
 }
 
-export default DoctorSection;
+export default Appointment;

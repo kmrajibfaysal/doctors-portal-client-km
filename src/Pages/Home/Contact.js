@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
+import MainButton from '../../Shared/MainButton';
 
 function Contact() {
     return (
@@ -14,12 +15,11 @@ function Contact() {
                             First Name
                         </label>
                         <input
-                            className="mb-3 block w-full appearance-none rounded border border-red-500 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:bg-white focus:outline-none"
+                            className="mb-3 block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:bg-white focus:outline-none"
                             id="grid-first-name"
                             type="text"
                             placeholder="Jane"
                         />
-                        <p className="text-xs italic text-red-500">Please fill out this field.</p>
                     </div>
                     <div className="w-full px-3 md:w-1/2">
                         <label
@@ -70,12 +70,7 @@ function Contact() {
                 </div>
                 <div className="md:flex md:items-center">
                     <div className="flex w-full items-center justify-center">
-                        <button
-                            className="focus:shadow-outline rounded bg-teal-400 py-2 px-4 font-bold text-white shadow hover:bg-teal-400 focus:outline-none"
-                            type="button"
-                        >
-                            Submit
-                        </button>
+                        <MainButton title="Submit" />
                     </div>
                 </div>
             </form>

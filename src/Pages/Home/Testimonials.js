@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
+import quoteMask from '../../assets/icons/quote.svg';
 import p1 from '../../assets/images/people1.png';
 import p2 from '../../assets/images/people2.png';
 import p3 from '../../assets/images/people3.png';
@@ -32,9 +33,14 @@ const patients = [
 function Testimonials() {
     return (
         <div className="container mx-auto min-h-[514px] px-4 py-24">
-            <div className="mb-8 text-center">
-                <h2 className="text-4xl font-bold text-secondary">Testimonials</h2>
-                <p className="text-lg text-gray-600">What others say about us</p>
+            <div className="mb-24 flex justify-between">
+                <div className="mb-8">
+                    <h2 className="text-xl font-bold text-secondary">Testimonials</h2>
+                    <p className="mt-2 text-4xl text-gray-600">What others say about us</p>
+                </div>
+                <div>
+                    <img src={quoteMask} className="w-24 md:w-48" alt="" />
+                </div>
             </div>
             <div className="lg:grid lg:grid-cols-3 lg:gap-x-2">
                 {patients.map((patient) => (
