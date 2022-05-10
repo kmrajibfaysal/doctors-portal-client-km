@@ -6,28 +6,31 @@ import whitening from '../../assets/images/whitening.png';
 import ServiceBanner from './ServiceBanner';
 import ServiceCard from './ServiceCard';
 
-function Services() {
-    const services = [
-        {
-            _id: 1,
-            name: 'Fluoride Treatment',
-            description: '',
-            img: fluoride,
-        },
-        {
-            _id: 2,
-            name: 'Cavity Filling',
-            description: '',
-            img: cavity,
-        },
-        {
-            _id: 3,
-            name: 'Teeth Whitening',
-            description: '',
-            img: whitening,
-        },
-    ];
+const services = [
+    {
+        _id: 1,
+        name: 'Fluoride Treatment',
+        description:
+            'Lorem Ipsum is simply dummy printing and typesetting indust Ipsum has been the',
+        img: fluoride,
+    },
+    {
+        _id: 2,
+        name: 'Cavity Filling',
+        description:
+            'Lorem Ipsum is simply dummy printing and typesetting indust Ipsum has been the',
+        img: cavity,
+    },
+    {
+        _id: 3,
+        name: 'Teeth Whitening',
+        description:
+            'Lorem Ipsum is simply dummy printing and typesetting indust Ipsum has been the',
+        img: whitening,
+    },
+];
 
+function Services() {
     return (
         <div className="container mx-auto mt-16 md:mt-32 ">
             <div className="my-20 text-center">
