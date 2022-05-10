@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import cavity from '../../assets/images/cavity.png';
 import fluoride from '../../assets/images/fluoride.png';
@@ -35,7 +36,7 @@ function Services() {
             </div>
             <div className="flex w-full flex-col items-center justify-center space-y-8 md:flex-row md:space-y-0 md:space-x-6">
                 {services.map((service) => (
-                    <ServiceCard key={service.key} service={service} />
+                    <ServiceCard key={service._id} service={service} />
                 ))}
             </div>
 
