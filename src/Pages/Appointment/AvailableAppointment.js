@@ -13,7 +13,7 @@ function AvailableAppointment({ selected }) {
         fetch('services.json')
             .then((res) => res.json())
             .then((data) => setServices(data));
-    }, [services]);
+    }, []);
 
     return (
         <div className="container mx-auto my-24 md:my-32">
