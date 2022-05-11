@@ -46,14 +46,14 @@ function BookingModal({ treatment, selected }) {
                             disabled
                             value={selected ? format(selected, 'PP') : ''}
                         />
-                        <input
-                            className="input input-bordered my-3 w-full "
-                            type="text"
-                            name=""
-                            id=""
-                            disabled
-                            value={treatment ? treatment.slots[0] : ''}
-                        />
+                        <select className="select select-bordered w-full">
+                            <option disabled selected>
+                                {treatment ? treatment.slots[0] : ''}
+                            </option>
+                            {treatment.slots.slice(1).map((slot) => (
+                                <option>{slot}</option>
+                            ))}
+                        </select>
                         <input
                             className="input input-bordered my-3 w-full "
                             type="text"
