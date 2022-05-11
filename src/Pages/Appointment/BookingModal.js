@@ -44,7 +44,7 @@ function BookingModal({ treatment, selected }) {
                             name=""
                             id=""
                             disabled
-                            value={selected && format(selected, 'PP')}
+                            value={selected ? format(selected, 'PP') : ''}
                         />
                         <input
                             className="input input-bordered my-3 w-full "
@@ -52,7 +52,7 @@ function BookingModal({ treatment, selected }) {
                             name=""
                             id=""
                             disabled
-                            value={treatment && treatment.slots[0]}
+                            value={treatment ? treatment.slots[0] : ''}
                         />
                         <input
                             className="input input-bordered my-3 w-full "

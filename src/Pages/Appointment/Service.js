@@ -18,14 +18,11 @@ function Service({ service, setTreatment }) {
                     {slots.length} {slots.length <= 1 ? 'space' : 'spaces'} available
                 </p>
                 <div>
-                    <button
-                        onClick={() => setTreatment(service)}
-                        type="button"
-                        disabled={!slots.length && true}
-                    >
+                    <button onClick={() => setTreatment(service)} type="button">
                         <label
                             htmlFor="booking-modal"
                             className="btn transform border-0 bg-gradient-to-r from-secondary to-primary uppercase text-white hover:scale-105"
+                            disabled={!slots.length && true}
                         >
                             book appointment
                         </label>
