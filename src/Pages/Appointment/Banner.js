@@ -2,7 +2,7 @@ import React from 'react';
 import hero from '../../assets/images/chair.png';
 import Calender from './Calender';
 
-function Banner() {
+function Banner({ selected, setSelected }) {
     return (
         <div className="hero bg-opacity-50 bg-heroBg md:min-h-[750px]">
             <div className="hero-content flex-col lg:flex-row-reverse">
@@ -14,7 +14,7 @@ function Banner() {
                     />
                 </div>
                 <div className="w-full md:w-1/2">
-                    <Calender />
+                    <Calender selected={selected} setSelected={setSelected} />
                 </div>
             </div>
         </div>
