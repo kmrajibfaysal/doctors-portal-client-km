@@ -13,7 +13,7 @@ function Banner({ selected, setSelected }) {
                         alt="doctor"
                     />
                 </div>
-                <div className="w-full md:w-1/2">
+                <div className="mx-auto w-full md:w-1/2">
                     <Calender selected={selected} setSelected={setSelected} />
                 </div>
             </div>
