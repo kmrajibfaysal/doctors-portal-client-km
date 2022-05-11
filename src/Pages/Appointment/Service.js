@@ -6,6 +6,7 @@ function Service({ service }) {
         <div className="card max-w-[425px] items-center justify-center bg-base-100 shadow-md">
             <div className="card-body text-center">
                 <h2 className="card-title justify-center text-secondary">{name}</h2>
+                <p>{slots.length < 0 ? 'No Slot Available' : slots[0]}</p>
                 <p className="text-xs">
                     {slots.length} {slots.length <= 1 ? 'space' : 'spaces'} available
                 </p>

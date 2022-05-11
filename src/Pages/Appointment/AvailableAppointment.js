@@ -22,7 +22,7 @@ function AvailableAppointment({ selected }) {
                     <p className="text-xl text-secondary">Please a pick a date!</p>
                 )}
             </div>
-            <div className="mx-auto grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
+            <div className="lg:gap:6 mx-auto grid max-w-7xl grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
                 {services.map((service) => (
                     <Service key={service._id} service={service} />
                 ))}
