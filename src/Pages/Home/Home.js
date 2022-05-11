@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from '../../Shared/Footer';
 import Appointment from './Appointment';
 import Banner from './Banner';
 import Contact from './Contact';
@@ -16,7 +15,6 @@ function Home() {
             <Appointment />
             <Testimonials />
             <Contact />
-            <Footer />
         </div>
     );
 }

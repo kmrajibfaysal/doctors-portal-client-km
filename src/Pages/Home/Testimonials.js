@@ -44,7 +44,7 @@ function Testimonials() {
             </div>
             <div className="lg:grid lg:grid-cols-3 lg:gap-x-2">
                 {patients.map((patient) => (
-                    <Testimonial key={patient.key} patient={patient} />
+                    <Testimonial key={patient._id} patient={patient} />
                 ))}
             </div>
         </div>
