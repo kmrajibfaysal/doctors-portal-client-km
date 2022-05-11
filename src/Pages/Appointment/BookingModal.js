@@ -13,7 +13,7 @@ function BookingModal({ treatment, selected }) {
                         <button type="button" className="absolute top-2 right-2 ">
                             <label htmlFor="booking-modal">
                                 <svg
-                                    className=""
+                                    className="cursor-pointer"
                                     version="1.1"
                                     id="Layer_1"
                                     x="0px"
@@ -37,16 +37,16 @@ function BookingModal({ treatment, selected }) {
                         </button>
                     </div>
 
-                    <form className="">
+                    <form>
                         <input
                             className="input input-bordered my-3 block w-full  rounded-md"
                             type="text"
-                            name=""
-                            id=""
+                            name="date"
+                            id="treatment-name"
                             disabled
                             value={selected ? format(selected, 'PP') : ''}
                         />
-                        <select className="select select-bordered w-full">
+                        <select name="time" className="select select-bordered my-3 w-full">
                             <option disabled selected>
                                 {treatment ? treatment.slots[0] : ''}
                             </option>
@@ -57,21 +57,21 @@ function BookingModal({ treatment, selected }) {
                         <input
                             className="input input-bordered my-3 w-full "
                             type="text"
-                            name=""
+                            name="name"
                             id=""
                             placeholder="Full Name"
                         />
                         <input
                             className="input input-bordered my-3 w-full "
                             type="text"
-                            name=""
+                            name="phone"
                             id=""
                             placeholder="Phone Number"
                         />
                         <input
                             className="input input-bordered my-3 w-full "
                             type="text"
-                            name=""
+                            name="email"
                             id=""
                             placeholder="Email"
                         />
