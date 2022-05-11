@@ -1,9 +1,13 @@
+/* eslint-disable no-unused-vars */
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
+import BookingModal from './BookingModal';
 import Service from './Service';
 
 function AvailableAppointment({ selected }) {
     const [services, setServices] = useState([]);
+
+    const [treatment, setTreatment] = useState(null);
 
     useEffect(() => {
         fetch('services.json')
@@ -24,9 +28,10 @@ function AvailableAppointment({ selected }) {
             </div>
             <div className="lg:gap:6 mx-auto grid max-w-7xl grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
                 {services.map((service) => (
-                    <Service key={service._id} service={service} />
+                    <Service key={service._id} service={service} setTreatment={setTreatment} />
                 ))}
             </div>
+            {treatment && <BookingModal treatment={treatment} selected={selected} />}
         </div>
     );
 }
