@@ -31,7 +31,13 @@ function AvailableAppointment({ selected }) {
                     <Service key={service._id} service={service} setTreatment={setTreatment} />
                 ))}
             </div>
-            {treatment && <BookingModal treatment={treatment} selected={selected} />}
+            {treatment && (
+                <BookingModal
+                    treatment={treatment}
+                    setTreatment={setTreatment}
+                    selected={selected}
+                />
+            )}
         </div>
     );
 }

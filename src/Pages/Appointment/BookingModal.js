@@ -1,8 +1,18 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { format } from 'date-fns';
 import React from 'react';
 
-function BookingModal({ treatment, selected }) {
+function BookingModal({ treatment, setTreatment, selected }) {
+    const handleBooking = (event) => {
+        event.preventDefault();
+        const slot = event.target.time.value;
+        const { name, _id } = treatment;
+
+        console.log(_id, name, slot);
+    };
+
     return (
         <div>
             <input type="checkbox" id="booking-modal" className="modal-toggle relative" />
@@ -37,7 +47,7 @@ function BookingModal({ treatment, selected }) {
                         </button>
                     </div>
 
-                    <form>
+                    <form onSubmit={handleBooking}>
                         <input
                             className="input input-bordered my-3 block w-full  rounded-md"
                             type="text"
@@ -46,12 +56,14 @@ function BookingModal({ treatment, selected }) {
                             disabled
                             value={selected ? format(selected, 'PP') : ''}
                         />
-                        <select name="time" className="select select-bordered my-3 w-full">
-                            <option disabled selected>
-                                {treatment ? treatment.slots[0] : ''}
-                            </option>
-                            {treatment.slots.slice(1).map((slot) => (
-                                <option>{slot}</option>
+                        <select
+                            name="time"
+                            className="select select-bordered my-3 w-full"
+                            defaultValue={treatment ? treatment.slots[0] : ''}
+                        >
+                            <option disabled>{treatment ? treatment.slots[0] : ''}</option>
+                            {treatment.slots.slice(1).map((slot, index) => (
+                                <option key={index}>{slot}</option>
                             ))}
                         </select>
                         <input
@@ -75,7 +87,7 @@ function BookingModal({ treatment, selected }) {
                             id=""
                             placeholder="Email"
                         />
-                        <button type="button" className="block w-full rounded-md border-0 ">
+                        <button type="submit" className="block w-full rounded-md border-0 ">
                             <label
                                 htmlFor="booking-modal"
                                 className="btn w-full border-0 bg-accent uppercase text-white"
