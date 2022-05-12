@@ -28,7 +28,7 @@ function Login() {
 
                     <div>
                         <label className="text-sm font-medium leading-none text-gray-800">
-                            Email<span className="text-red-500">*</span>
+                            Email
                         </label>
                         <input
                             ref={emailRef}
@@ -42,7 +42,7 @@ function Login() {
                     </div>
                     <div className="mt-6  w-full">
                         <label className="text-sm font-medium leading-none text-gray-800">
-                            Password<span className="text-red-500">*</span>
+                            Password
                         </label>
                         <div className="relative flex items-center justify-center">
                             <input
@@ -88,7 +88,7 @@ function Login() {
                                     href="/"
                                     className="text-accent hover:underline dark:text-blue-500"
                                 >
-                                    terms and conditions<span className="text-red-500">*</span>
+                                    terms and conditions
                                 </a>
                             </label>
                         </div>
@@ -130,9 +130,9 @@ function Login() {
                         onClick={handleLogin}
                         role="button"
                         aria-label="Login"
-                        className="text-md w-full  rounded-lg border border-accent py-4 font-bold leading-none text-accent"
+                        className="text-md w-full  rounded-lg border border-accent py-4 font-bold uppercase leading-none text-accent"
                     >
-                        Login
+                        continue with google
                     </button>
                 </div>
             </form>
