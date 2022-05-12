@@ -10,7 +10,7 @@
 
 @layer components {
   .nav-link li {
-    @apply rounded-md px-4 py-3 hover:bg-secondary hover:text-white;
+    @apply rounded-md px-4 py-3 hover:bg-accent hover:text-white;
   }
 
   .logo {
@@ -19,6 +19,5 @@
 }
 
 .cardContainer div {
-  @apply w-80 md:w-96 ;
+  @apply w-80 md:w-96;
 }
-
