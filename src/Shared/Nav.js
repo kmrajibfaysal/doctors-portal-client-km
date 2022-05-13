@@ -6,10 +6,15 @@ import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
 import auth from '../firebase.init';
+import Loading from './Loading';
 
 function Navbar() {
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const logOut = () => signOut(auth);
+
+    if (loading) {
+        return <Loading />;
+    }
     return (
         <nav className="container mx-auto">
             <div className="navbar justify-between bg-base-100">
