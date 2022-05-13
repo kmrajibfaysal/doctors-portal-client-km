@@ -1,25 +1,37 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-useless-escape */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/aria-role */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable react/button-has-type */
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 function Register() {
-    const nameRef = useRef('');
-    const emailRef = useRef('');
-    const passwordRef = useRef('');
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm();
+
     const [err, setErr] = useState(null);
 
     const handleResetPassword = () => {};
     const handleSignUp = () => {};
 
+    const onSubmit = (data) => console.log(data);
+
     return (
-        <div className="w-full px-4 md:py-16">
-            <form className="flex flex-col items-center justify-center">
-                <div className="mt-16 w-full max-w-[480px] rounded-xl  bg-white p-10 shadow">
+        <div className="w-full px-4 md:py-8">
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col items-center justify-center"
+            >
+                <div className="w-full max-w-[480px] rounded-xl  bg-white p-10 shadow">
                     <p
                         aria-label="Sign up to a new account"
                         className="mb-12 text-center text-2xl font-bold leading-6 text-gray-800"
@@ -32,7 +44,9 @@ function Register() {
                             Name
                         </label>
                         <input
-                            ref={nameRef}
+                            {...register('name', {
+                                required: { value: true, message: 'This is required!' },
+                            })}
                             aria-label="enter email address"
                             role="input"
                             type="text"
@@ -40,13 +54,20 @@ function Register() {
                                 err ? 'border-red-600' : 'border-gray-200'
                             } bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
                         />
+                        <p className="text-red-500">{errors.name?.message}</p>
                     </div>
                     <div>
                         <label className="text-sm font-medium leading-none text-gray-800">
                             Email
                         </label>
                         <input
-                            ref={emailRef}
+                            {...register('email', {
+                                required: { value: true, message: 'Email is required!' },
+                                pattern: {
+                                    value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                                    message: 'Please enter a valid email!',
+                                },
+                            })}
                             aria-label="enter email address"
                             role="input"
                             type="email"
@@ -54,6 +75,7 @@ function Register() {
                                 err ? 'border-red-600' : 'border-gray-200'
                             } bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
                         />
+                        <p className="text-red-500">{errors.email?.message}</p>
                     </div>
                     <div className="mt-6  w-full">
                         <label className="text-sm font-medium leading-none text-gray-800">
@@ -61,7 +83,17 @@ function Register() {
                         </label>
                         <div className="relative flex items-center justify-center">
                             <input
-                                ref={passwordRef}
+                                {...register('password', {
+                                    required: { value: true, message: 'Password is required.' },
+                                    minLength: {
+                                        value: 6,
+                                        message: 'Password must be at least 6 characters long',
+                                    },
+                                    pattern: {
+                                        value: /(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,50})$/,
+                                        message: 'Password must contains 1 letter and 1 number',
+                                    },
+                                })}
                                 aria-label="enter Password"
                                 role="input"
                                 type="password"
@@ -69,6 +101,7 @@ function Register() {
                                     err ? 'border-red-600' : 'border-gray-200'
                                 } bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
                             />
+
                             <div className="absolute right-0 mt-2 mr-3 cursor-pointer">
                                 <svg
                                     width={16}
@@ -84,28 +117,35 @@ function Register() {
                                 </svg>
                             </div>
                         </div>
+                        <p className="text-red-500">{errors.password?.message}</p>
                     </div>
                     <div className="mt-8">
                         {err ? <p className="mb-4 text-red-500">{err}</p> : ''}
-                        <div className="mb-4 flex items-center">
-                            <input
-                                id="checkbox-1"
-                                aria-describedby="checkbox-1"
-                                type="checkbox"
-                                className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-accent"
-                            />
-                            <label
-                                htmlFor="checkbox-1"
-                                className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
-                            >
-                                I agree to the{' '}
-                                <a
-                                    href="/"
-                                    className="text-accent hover:underline dark:text-blue-500"
+                        <div className="mb-4 flex flex-col items-start">
+                            <div>
+                                <input
+                                    {...register('terms', {
+                                        required: {
+                                            value: true,
+                                            message: 'Please agree to terms and condition.',
+                                        },
+                                    })}
+                                    id="checkbox-1"
+                                    aria-describedby="checkbox-1"
+                                    type="checkbox"
+                                    className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-accent"
+                                />
+                                <label
+                                    htmlFor="checkbox-1"
+                                    className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
                                 >
-                                    terms and conditions
-                                </a>
-                            </label>
+                                    I agree to the{' '}
+                                    <a href="/" className="text-blue-600 hover:underline">
+                                        terms and conditions
+                                    </a>
+                                </label>
+                            </div>
+                            <p className="text-red-500">{errors.terms?.message}</p>
                         </div>
                         <button
                             onClick={handleResetPassword}
