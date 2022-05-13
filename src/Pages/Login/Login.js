@@ -1,23 +1,36 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-undef */
 /* eslint-disable jsx-a11y/aria-role */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/no-redundant-roles */
 /* eslint-disable react/button-has-type */
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 function Login() {
-    const emailRef = useRef('');
-    const passwordRef = useRef('');
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm();
+
     const [err, setErr] = useState(null);
 
     const handleResetPassword = () => {};
     const handleLogin = () => {};
 
+    const onSubmit = (data) => console.log(data);
+
     return (
         <div className="w-full px-4 md:py-16">
-            <form className="flex flex-col items-center justify-center">
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-col items-center justify-center"
+            >
                 <div className="mt-16 w-full max-w-[480px] rounded-xl  bg-white p-10 shadow">
                     <p
                         aria-label="Login to your account"
@@ -31,7 +44,13 @@ function Login() {
                             Email
                         </label>
                         <input
-                            ref={emailRef}
+                            {...register('email', {
+                                required: { value: true, message: 'Email is required!' },
+                                pattern: {
+                                    value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                                    message: 'Please enter a valid email!',
+                                },
+                            })}
                             aria-label="enter email address"
                             role="input"
                             type="email"
@@ -39,6 +58,7 @@ function Login() {
                                 err ? 'border-red-600' : 'border-gray-200'
                             } bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
                         />
+                        <p className="text-red-500">{errors.email?.message}</p>
                     </div>
                     <div className="mt-6  w-full">
                         <label className="text-sm font-medium leading-none text-gray-800">
@@ -46,7 +66,17 @@ function Login() {
                         </label>
                         <div className="relative flex items-center justify-center">
                             <input
-                                ref={passwordRef}
+                                {...register('password', {
+                                    required: 'Password must be at least 6 characters long.',
+                                    minLength: {
+                                        value: 6,
+                                        message: 'Password must be at least 6 characters long',
+                                    },
+                                    pattern: {
+                                        value: /(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,50})$/,
+                                        message: 'Password must contains 1 letter and 1 number',
+                                    },
+                                })}
                                 aria-label="enter Password"
                                 role="input"
                                 type="password"
@@ -69,6 +99,7 @@ function Login() {
                                 </svg>
                             </div>
                         </div>
+                        <p className="text-red-500">{errors.password?.message}</p>
                     </div>
                     <div className="mt-8">
                         {err ? <p className="mb-4 text-red-500">{err}</p> : ''}
@@ -100,7 +131,6 @@ function Login() {
                         </button>
                         <button
                             type="submit"
-                            onClick={handleLogin}
                             role="button"
                             aria-label="Login"
                             className="text-md btn w-full   py-4 font-bold leading-none text-white hover:bg-accent"
@@ -127,7 +157,6 @@ function Login() {
                     </div>
                     <button
                         type="submit"
-                        onClick={handleLogin}
                         role="button"
                         aria-label="Login"
                         className="text-md w-full  rounded-lg border border-accent py-4 font-bold uppercase leading-none text-accent"
