@@ -53,7 +53,7 @@ function Navbar() {
                         </label>
                         <ul
                             tabIndex="0"
-                            className="nav-link dropdown-content rounded-box  mt-3 w-52  p-2 shadow"
+                            className="nav-link dropdown-content rounded-box mt-3  w-52 bg-white  p-2 shadow"
                         >
                             <li>
                                 <Link to="/">Home</Link>
