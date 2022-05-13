@@ -1,11 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-useless-escape */
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-/* eslint-disable jsx-a11y/aria-role */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/no-redundant-roles */
-/* eslint-disable react/button-has-type */
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
@@ -14,7 +7,6 @@ function Register() {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm();
 
@@ -148,6 +140,7 @@ function Register() {
                             <p className="text-red-500">{errors.terms?.message}</p>
                         </div>
                         <button
+                            type="button"
                             onClick={handleResetPassword}
                             className=" mb-4 cursor-pointer text-right text-sm font-semibold text-gray-800 hover:text-accent hover:underline"
                         >
@@ -156,7 +149,6 @@ function Register() {
                         <button
                             type="submit"
                             onClick={handleSignUp}
-                            role="button"
                             aria-label="Login"
                             className="text-md btn w-full   py-4 font-bold leading-none text-white hover:bg-accent"
                         >
@@ -183,7 +175,6 @@ function Register() {
                     <button
                         type="submit"
                         onClick={handleSignUp}
-                        role="button"
                         aria-label="register"
                         className="text-md w-full  rounded-lg border border-accent py-4 font-bold uppercase leading-none text-accent"
                     >
