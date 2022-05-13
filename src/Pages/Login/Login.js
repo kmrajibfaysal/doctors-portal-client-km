@@ -1,6 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import {
+    useSignInWithEmailAndPassword,
+    // eslint-disable-next-line prettier/prettier
+    useSignInWithGoogle
+} from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import auth from '../../firebase.init';
@@ -16,25 +20,26 @@ function Login() {
     const [seePass, setSeePass] = useState(false);
 
     // google sign in
-    const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
+    const [signInWithGoogle, loadingGoogle] = useSignInWithGoogle(auth);
     const handleGoogleSignIn = () => {
         signInWithGoogle();
     };
 
     // email password login
-    const [signInWithEmailAndPassword, userEmail, loadingEmail, errorEmail] =
+    const [signInWithEmailAndPassword, loadingEmail, errorEmail] =
         useSignInWithEmailAndPassword(auth);
-
-    const [err, setErr] = useState(null); // not used
-
-    const handleResetPassword = () => {};
 
     const handleEmailLogin = async (data) => {
         const { email, password } = data;
         signInWithEmailAndPassword(email, password);
     };
 
-    if (loadingEmail || loadingGoogle) {
+    // reset handleResetPassword
+    // const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);
+    const handleResetPassword = () => {};
+
+    // Loading spinner
+    if (loadingEmail) {
         return <Loading />;
     }
 
@@ -65,9 +70,8 @@ function Login() {
                                 aria-label="enter email address"
                                 role="input"
                                 type="email"
-                                className={`text-md mt-2 w-full rounded border ${
-                                    err ? 'border-red-600' : 'border-gray-200'
-                                } bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
+                                className={`text-md mt-2 w-full rounded border border-gray-200
+                                bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
                             />
                             <p className="mt-3 text-red-500">{errors.email?.message}</p>
                         </div>
@@ -91,9 +95,8 @@ function Login() {
                                     aria-label="enter Password"
                                     role="input"
                                     type={seePass ? 'text' : 'password'}
-                                    className={`text-md mt-2 w-full rounded border ${
-                                        err ? 'border-red-600' : 'border-gray-200'
-                                    } bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
+                                    className={`text-md mt-2 w-full rounded border border-gray-200
+                                     bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
                                 />
 
                                 <button

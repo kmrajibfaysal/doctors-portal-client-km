@@ -9,6 +9,7 @@ import auth from '../firebase.init';
 
 function Navbar() {
     const [user] = useAuthState(auth);
+    const logOut = () => signOut(auth);
     return (
         <nav className="container mx-auto">
             <div className="navbar justify-between bg-base-100">
@@ -34,9 +35,15 @@ function Navbar() {
                         <li>
                             <Link to="/contact">Contact</Link>
                         </li>
-                        <button className="block px-3" type="button" onClick={() => signOut(auth)}>
-                            <Link to="/login">{user ? 'Log out' : 'Login'}</Link>
-                        </button>
+                        <li>
+                            {user ? (
+                                <button type="button" onClick={logOut}>
+                                    Sign out
+                                </button>
+                            ) : (
+                                <Link to="login">Login</Link>
+                            )}
+                        </li>
                     </ul>
                     <div className="dropdown-end dropdown">
                         <label tabIndex="0" className="btn btn-ghost lg:hidden">

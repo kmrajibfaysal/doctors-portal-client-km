@@ -4,17 +4,19 @@ import React, { useState } from 'react';
 import {
     useCreateUserWithEmailAndPassword,
     useSendEmailVerification,
+    useSignInWithGoogle,
     // eslint-disable-next-line prettier/prettier
-    useSignInWithGoogle
+    useUpdateProfile
 } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 import Loading from '../../Shared/Loading';
 
 function Register() {
     const [seePass, setSeePass] = useState(false);
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -22,6 +24,8 @@ function Register() {
     } = useForm();
 
     const [sendEmailVerification] = useSendEmailVerification(auth);
+    // updating username
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
     // google sign in
     const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
@@ -36,13 +40,15 @@ function Register() {
     const handleResetPassword = () => {};
 
     const handleEmailRegister = async (data) => {
-        const { email, password } = data;
+        const { name, email, password } = data;
         await createUserWithEmailAndPassword(email, password);
         await toast('A verification email sent!');
         await sendEmailVerification();
+        await updateProfile({ displayName: name });
+        navigate('/appointment');
     };
 
-    if (loadingEmail || loadingGoogle) {
+    if (loadingEmail || loadingGoogle || updating) {
         return <Loading />;
     }
 
