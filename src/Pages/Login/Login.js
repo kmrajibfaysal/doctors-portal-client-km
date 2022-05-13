@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import auth from '../../firebase.init';
+import Loading from '../../Shared/Loading';
 
 function Login() {
     const {
@@ -12,17 +13,30 @@ function Login() {
         formState: { errors },
     } = useForm();
 
+    const [seePass, setSeePass] = useState(false);
+
     // google sign in
-    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+    const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
     const handleGoogleSignIn = () => {
         signInWithGoogle();
     };
+
+    // email password login
+    const [signInWithEmailAndPassword, userEmail, loadingEmail, errorEmail] =
+        useSignInWithEmailAndPassword(auth);
 
     const [err, setErr] = useState(null); // not used
 
     const handleResetPassword = () => {};
 
-    const handleEmailLogin = (data) => console.log(data);
+    const handleEmailLogin = async (data) => {
+        const { email, password } = data;
+        signInWithEmailAndPassword(email, password);
+    };
+
+    if (loadingEmail || loadingGoogle) {
+        return <Loading />;
+    }
 
     return (
         <div className="w-full px-4 md:py-8">
@@ -55,7 +69,7 @@ function Login() {
                                     err ? 'border-red-600' : 'border-gray-200'
                                 } bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
                             />
-                            <p className="text-red-500">{errors.email?.message}</p>
+                            <p className="mt-3 text-red-500">{errors.email?.message}</p>
                         </div>
                         <div className="mt-6  w-full">
                             <label className="text-sm font-medium leading-none text-gray-800">
@@ -76,13 +90,17 @@ function Login() {
                                     })}
                                     aria-label="enter Password"
                                     role="input"
-                                    type="password"
+                                    type={seePass ? 'text' : 'password'}
                                     className={`text-md mt-2 w-full rounded border ${
                                         err ? 'border-red-600' : 'border-gray-200'
                                     } bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
                                 />
 
-                                <div className="absolute right-0 mt-2 mr-3 cursor-pointer">
+                                <button
+                                    type="button"
+                                    onClick={() => setSeePass(!seePass)}
+                                    className="absolute right-0 mt-2 mr-3 cursor-pointer"
+                                >
                                     <svg
                                         width={16}
                                         height={16}
@@ -95,38 +113,15 @@ function Login() {
                                             fill="#71717A"
                                         />
                                     </svg>
-                                </div>
+                                </button>
                             </div>
-                            <p className="text-red-500">{errors.password?.message}</p>
+                            <p className="mt-3 text-red-500">{errors.password?.message}</p>
+                            <p className="mt-3 text-red-500">
+                                {errorEmail ? 'Wrong email or password. Please try again!' : ''}
+                            </p>
                         </div>
-                        <div className="mt-8">
-                            {err ? <p className="mb-4 text-red-500">{err}</p> : ''}
-                            <div className="mb-4 flex flex-col items-start">
-                                <div>
-                                    <input
-                                        {...register('terms', {
-                                            required: {
-                                                value: true,
-                                                message: 'Please agree to terms and condition.',
-                                            },
-                                        })}
-                                        id="checkbox-1"
-                                        aria-describedby="checkbox-1"
-                                        type="checkbox"
-                                        className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-accent"
-                                    />
-                                    <label
-                                        htmlFor="checkbox-1"
-                                        className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
-                                    >
-                                        I agree to the{' '}
-                                        <a href="/" className="text-blue-600 hover:underline">
-                                            terms and conditions
-                                        </a>
-                                    </label>
-                                </div>
-                                <p className="text-red-500">{errors.terms?.message}</p>
-                            </div>
+                        <div className="mt-4">
+                            <div className="flex flex-col items-start" />
                             <button
                                 type="button"
                                 onClick={handleResetPassword}
@@ -164,7 +159,7 @@ function Login() {
                         type="button"
                         onClick={handleGoogleSignIn}
                         aria-label="register"
-                        className="text-md w-full  rounded-lg border border-accent py-4 font-bold uppercase leading-none text-accent"
+                        className="text-md btn btn-outline w-full font-bold uppercase leading-none text-accent"
                     >
                         continue with google
                     </button>

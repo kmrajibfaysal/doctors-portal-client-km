@@ -1,29 +1,50 @@
 /* eslint-disable no-unused-vars */
+
 import React, { useState } from 'react';
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import {
+    useCreateUserWithEmailAndPassword,
+    useSendEmailVerification,
+    // eslint-disable-next-line prettier/prettier
+    useSignInWithGoogle
+} from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
+import Loading from '../../Shared/Loading';
 
 function Register() {
+    const [seePass, setSeePass] = useState(false);
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
 
+    const [sendEmailVerification] = useSendEmailVerification(auth);
+
     // google sign in
-    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+    const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
     const handleGoogleSignIn = () => {
         signInWithGoogle();
     };
 
-    const [err, setErr] = useState(null); // not used
+    // email password register
+    const [createUserWithEmailAndPassword, userEmail, loadingEmail, errorEmail] =
+        useCreateUserWithEmailAndPassword(auth); // not used
 
     const handleResetPassword = () => {};
-    const handleSignUp = () => {};
 
-    const handleEmailRegister = (data) => console.log(data);
+    const handleEmailRegister = async (data) => {
+        const { email, password } = data;
+        await createUserWithEmailAndPassword(email, password);
+        await toast('A verification email sent!');
+        await sendEmailVerification();
+    };
+
+    if (loadingEmail || loadingGoogle) {
+        return <Loading />;
+    }
 
     return (
         <div className="w-full px-4 md:py-8">
@@ -48,9 +69,9 @@ function Register() {
                                 aria-label="enter email address"
                                 role="input"
                                 type="text"
-                                className={`text-md mt-2 w-full rounded border ${
-                                    err ? 'border-red-600' : 'border-gray-200'
-                                } bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
+                                className={`text-md mt-2 w-full rounded border
+                                   border-gray-200
+                                bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
                             />
                             <p className="text-red-500">{errors.name?.message}</p>
                         </div>
@@ -69,9 +90,8 @@ function Register() {
                                 aria-label="enter email address"
                                 role="input"
                                 type="email"
-                                className={`text-md mt-2 w-full rounded border ${
-                                    err ? 'border-red-600' : 'border-gray-200'
-                                } bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
+                                className={`text-md mt-2 w-full rounded border border-gray-200
+                                 bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
                             />
                             <p className="text-red-500">{errors.email?.message}</p>
                         </div>
@@ -94,13 +114,16 @@ function Register() {
                                     })}
                                     aria-label="enter Password"
                                     role="input"
-                                    type="password"
-                                    className={`text-md mt-2 w-full rounded border ${
-                                        err ? 'border-red-600' : 'border-gray-200'
-                                    } bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
+                                    type={seePass ? 'text' : 'password'}
+                                    className={`text-md 'border-gray-200 mt-2 w-full rounded border
+                                     bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
                                 />
 
-                                <div className="absolute right-0 mt-2 mr-3 cursor-pointer">
+                                <button
+                                    type="button"
+                                    onClick={() => setSeePass(!seePass)}
+                                    className="absolute right-0 mt-2 mr-3 cursor-pointer"
+                                >
                                     <svg
                                         width={16}
                                         height={16}
@@ -113,12 +136,11 @@ function Register() {
                                             fill="#71717A"
                                         />
                                     </svg>
-                                </div>
+                                </button>
                             </div>
                             <p className="text-red-500">{errors.password?.message}</p>
                         </div>
                         <div className="mt-8">
-                            {err ? <p className="mb-4 text-red-500">{err}</p> : ''}
                             <div className="mb-4 flex flex-col items-start">
                                 <div>
                                     <input
@@ -145,17 +167,11 @@ function Register() {
                                 </div>
                                 <p className="text-red-500">{errors.terms?.message}</p>
                             </div>
-                            <button
-                                type="button"
-                                onClick={handleResetPassword}
-                                className=" mb-4 cursor-pointer text-right text-sm font-semibold text-gray-800 hover:text-accent hover:underline"
-                            >
-                                Forgot password?
-                            </button>
+
                             <button
                                 type="submit"
                                 aria-label="Login"
-                                className="text-md btn w-full   py-4 font-bold leading-none text-white hover:bg-accent"
+                                className="text-md btn mt-3 w-full py-4 font-bold leading-none text-white hover:bg-accent"
                             >
                                 Sign up
                             </button>
@@ -182,7 +198,7 @@ function Register() {
                         type="button"
                         onClick={handleGoogleSignIn}
                         aria-label="register"
-                        className="text-md w-full  rounded-lg border border-accent py-4 font-bold uppercase leading-none text-accent"
+                        className="text-md btn btn-outline w-full font-bold uppercase leading-none text-accent"
                     >
                         continue with google
                     </button>

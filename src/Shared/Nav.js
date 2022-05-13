@@ -1,20 +1,24 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
+import { signOut } from 'firebase/auth';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
+import auth from '../firebase.init';
 
 function Navbar() {
+    const [user] = useAuthState(auth);
     return (
         <nav className="container mx-auto">
-            <div className="navbar bg-base-100">
-                <div className="navbar-start">
+            <div className="navbar justify-between bg-base-100">
+                <div className="">
                     <Link to="/" className="logo text-xl font-bold md:text-2xl ">
                         Doctors Portal
                     </Link>
                 </div>
-                <div className="navbar-end ">
-                    <ul className="nav-link  hidden p-0 lg:flex">
+                <div className=" ">
+                    <ul className="nav-link  hidden lg:flex">
                         <li>
                             <Link to="/">Home</Link>
                         </li>
@@ -30,9 +34,9 @@ function Navbar() {
                         <li>
                             <Link to="/contact">Contact</Link>
                         </li>
-                        <li>
-                            <Link to="/login">Login</Link>
-                        </li>
+                        <button className="block px-3" type="button" onClick={() => signOut(auth)}>
+                            <Link to="/login">{user ? 'Log out' : 'Login'}</Link>
+                        </button>
                     </ul>
                     <div className="dropdown-end dropdown">
                         <label tabIndex="0" className="btn btn-ghost lg:hidden">
