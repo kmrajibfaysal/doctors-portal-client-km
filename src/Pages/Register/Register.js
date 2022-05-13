@@ -9,7 +9,7 @@ import {
     useUpdateProfile
 } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 import Loading from '../../Shared/Loading';
@@ -23,19 +23,24 @@ function Register() {
         formState: { errors },
     } = useForm();
 
+    // handle redirect auth
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+
     const [sendEmailVerification] = useSendEmailVerification(auth);
     // updating username
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
     // google sign in
     const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
-    const handleGoogleSignIn = () => {
-        signInWithGoogle();
+    const handleGoogleSignIn = async () => {
+        await signInWithGoogle();
+        navigate(from, { replace: true });
     };
 
     // email password register
     const [createUserWithEmailAndPassword, userEmail, loadingEmail, errorEmail] =
-        useCreateUserWithEmailAndPassword(auth); // not used
+        useCreateUserWithEmailAndPassword(auth);
 
     const handleResetPassword = () => {};
 
@@ -45,7 +50,7 @@ function Register() {
         await toast('A verification email sent!');
         await sendEmailVerification();
         await updateProfile({ displayName: name });
-        navigate('/appointment');
+        navigate(from, { replace: true });
     };
 
     if (loadingEmail || loadingGoogle || updating) {

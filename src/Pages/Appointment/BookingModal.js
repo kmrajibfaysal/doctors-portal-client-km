@@ -1,16 +1,21 @@
-/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
+/* eslint-disable react/no-array-index-key */
+
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { format } from 'date-fns';
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 
 function BookingModal({ treatment, setTreatment, selected }) {
+    const { name, _id, slots } = treatment;
+    const [user] = useAuthState(auth);
+
     const handleBooking = (event) => {
         event.preventDefault();
         const slot = event.target.time.value;
-        const { name, _id } = treatment;
 
-        console.log(_id, name, slot);
+        setTreatment(null);
     };
 
     return (
@@ -54,14 +59,14 @@ function BookingModal({ treatment, setTreatment, selected }) {
                             name="date"
                             id="treatment-name"
                             disabled
-                            value={selected ? format(selected, 'PP') : ''}
+                            defaultValue={selected ? format(selected, 'PP') : ''}
                         />
                         <select
                             name="time"
                             className="select select-bordered my-3 w-full"
                             defaultValue={treatment ? treatment.slots[0] : ''}
                         >
-                            <option disabled>{treatment ? treatment.slots[0] : ''}</option>
+                            <option>{treatment ? treatment.slots[0] : ''}</option>
                             {treatment.slots.slice(1).map((slot, index) => (
                                 <option key={index}>{slot}</option>
                             ))}
@@ -72,6 +77,18 @@ function BookingModal({ treatment, setTreatment, selected }) {
                             name="name"
                             id=""
                             placeholder="Full Name"
+                            defaultValue={user.displayName}
+                            disabled
+                        />
+
+                        <input
+                            className="input input-bordered my-3 w-full "
+                            type="text"
+                            name="email"
+                            id=""
+                            placeholder="Email"
+                            defaultValue={user.email}
+                            disabled
                         />
                         <input
                             className="input input-bordered my-3 w-full "
@@ -79,13 +96,6 @@ function BookingModal({ treatment, setTreatment, selected }) {
                             name="phone"
                             id=""
                             placeholder="Phone Number"
-                        />
-                        <input
-                            className="input input-bordered my-3 w-full "
-                            type="text"
-                            name="email"
-                            id=""
-                            placeholder="Email"
                         />
                         <button type="submit" className="block w-full rounded-md border-0 ">
                             <label
