@@ -6,7 +6,7 @@ import {
     useSignInWithGoogle
 } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import Loading from '../../Shared/Loading';
 
@@ -19,10 +19,16 @@ function Login() {
 
     const [seePass, setSeePass] = useState(false);
 
+    // handle redirect auth
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+
     // google sign in
     const [signInWithGoogle, loadingGoogle] = useSignInWithGoogle(auth);
-    const handleGoogleSignIn = () => {
-        signInWithGoogle();
+    const handleGoogleSignIn = async () => {
+        await signInWithGoogle();
+        navigate(from, { replace: true });
     };
 
     // email password login
@@ -32,6 +38,7 @@ function Login() {
     const handleEmailLogin = async (data) => {
         const { email, password } = data;
         signInWithEmailAndPassword(email, password);
+        navigate(from, { replace: true });
     };
 
     // reset handleResetPassword
