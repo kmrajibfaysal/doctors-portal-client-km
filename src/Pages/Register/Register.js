@@ -62,7 +62,7 @@ function Register() {
         return <Loading />;
     }
 
-    if (userEmail || userGoogle) {
+    if (token) {
         navigate(from, { replace: true });
     }
 
