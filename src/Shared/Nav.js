@@ -10,7 +10,10 @@ import Loading from './Loading';
 
 function Navbar() {
     const [user, loading] = useAuthState(auth);
-    const logOut = () => signOut(auth);
+    const logOut = () => {
+        signOut(auth);
+        localStorage.removeItem('accessToken');
+    };
 
     if (loading) {
         return <Loading />;
