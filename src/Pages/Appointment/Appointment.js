@@ -7,7 +7,7 @@ import AvailableAppointment from './AvailableAppointment';
 import Banner from './Banner';
 
 function Appointment() {
-    const [selected, setSelected] = useState();
+    const [selected, setSelected] = useState(new Date());
     const [user, loading] = useAuthState(auth);
 
     if (loading) {

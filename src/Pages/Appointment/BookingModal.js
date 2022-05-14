@@ -5,17 +5,44 @@
 import { format } from 'date-fns';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 
 function BookingModal({ treatment, setTreatment, selected }) {
     const { name, _id, slots } = treatment;
     const [user] = useAuthState(auth);
+    const formattedDate = format(selected, 'PP');
 
     const handleBooking = (event) => {
         event.preventDefault();
         const slot = event.target.time.value;
+        const booking = {
+            treatmentId: _id,
+            treatment: name,
+            date: formattedDate,
+            slot,
+            patient: user.email,
+            patientName: user.displayName,
+            phone: event.target.phone.value,
+        };
 
-        setTreatment(null);
+        fetch('http://localhost:5000/booking', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(booking),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.success) {
+                    toast(`Appointment is set, ${formattedDate} at ${slot}`);
+                } else {
+                    toast.error(
+                        `You already have an appointment on ${data.booking?.date} at ${data.booking?.slot}`
+                    );
+                }
+            });
     };
 
     return (
@@ -24,7 +51,9 @@ function BookingModal({ treatment, setTreatment, selected }) {
             <div className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
                     <div className="flex items-center justify-between">
-                        <h3 className="text-lg font-bold">{treatment.name}</h3>
+                        <h3 className="text-lg font-bold text-secondary">
+                            Booking for: {treatment.name}
+                        </h3>
                         <button type="button" className="absolute top-2 right-2 ">
                             <label htmlFor="booking-modal">
                                 <svg
@@ -77,7 +106,7 @@ function BookingModal({ treatment, setTreatment, selected }) {
                             name="name"
                             id=""
                             placeholder="Full Name"
-                            defaultValue={user.displayName}
+                            defaultValue={user?.displayName}
                             disabled
                         />
 
@@ -87,7 +116,7 @@ function BookingModal({ treatment, setTreatment, selected }) {
                             name="email"
                             id=""
                             placeholder="Email"
-                            defaultValue={user.email}
+                            defaultValue={user?.email}
                             disabled
                         />
                         <input
