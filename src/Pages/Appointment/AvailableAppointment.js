@@ -1,19 +1,38 @@
 /* eslint-disable no-unused-vars */
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useQuery } from 'react-query';
+import Loading from '../../Shared/Loading';
 import BookingModal from './BookingModal';
 import Service from './Service';
 
 function AvailableAppointment({ selected }) {
-    const [services, setServices] = useState([]);
+    // const [services, setServices] = useState([]);
 
     const [treatment, setTreatment] = useState(null);
+    const formattedDate = format(selected, 'PP');
 
-    useEffect(() => {
-        fetch('http://localhost:5000/service')
-            .then((res) => res.json())
-            .then((data) => setServices(data));
-    }, []);
+    // using react query
+    const {
+        isLoading,
+        error,
+        data: services,
+        refetch,
+    } = useQuery(['available', selected], () =>
+        fetch(`http://localhost:5000/available?date=${formattedDate}`).then((res) => res.json())
+    );
+
+    if (isLoading) {
+        return <Loading />;
+    }
+
+    // old method
+    // useEffect(() => {
+    //     const formattedDate = format(selected, 'PP');
+    //     fetch(`http://localhost:5000/available?date=${formattedDate}`)
+    //         .then((res) => res.json())
+    //         .then((data) => setServices(data));
+    // }, [selected]);
 
     return (
         <div className="container mx-auto my-24 md:my-32">
@@ -27,12 +46,13 @@ function AvailableAppointment({ selected }) {
                 )}
             </div>
             <div className="lg:gap:6 mx-auto grid max-w-7xl grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3">
-                {services.map((service) => (
+                {services?.map((service) => (
                     <Service key={service._id} service={service} setTreatment={setTreatment} />
                 ))}
             </div>
             {treatment && (
                 <BookingModal
+                    refetch={refetch}
                     treatment={treatment}
                     setTreatment={setTreatment}
                     selected={selected}
