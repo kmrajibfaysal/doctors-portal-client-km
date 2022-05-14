@@ -1,6 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Appointment from './Pages/Appointment/Appointment';
+import Dashboard from './Pages/Dashboard/Dashboard';
+import MyAppointments from './Pages/Dashboard/MyAppointments';
+import MyReview from './Pages/Dashboard/MyReview';
 import Home from './Pages/Home/Home';
 import Login from './Pages/Login/Login';
 import Register from './Pages/Register/Register';
@@ -26,6 +29,17 @@ function App() {
                         </RequireAuth>
                     }
                 />
+                <Route
+                    path="/dashboard"
+                    element={
+                        <RequireAuth>
+                            <Dashboard />
+                        </RequireAuth>
+                    }
+                >
+                    <Route index element={<MyAppointments />} />
+                    <Route path="review" element={<MyReview />} />
+                </Route>
                 <Route path="/reviews" element={<Home />} />
                 <Route path="/contact" element={<Home />} />
                 <Route path="/login" element={<Login />} />
