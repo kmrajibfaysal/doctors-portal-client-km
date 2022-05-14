@@ -18,7 +18,6 @@ function MyAppointments() {
 
     return (
         <div className="overflow-x-auto">
-            <h3 className="text-5xl">{console.log(appointments)}</h3>
             <table className="table w-full">
                 <thead>
                     <tr>

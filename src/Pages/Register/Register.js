@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
+import useToken from '../../hooks/useToken';
 import Loading from '../../Shared/Loading';
 
 function Register() {
@@ -35,12 +36,14 @@ function Register() {
     const [signInWithGoogle, userGoogle, loadingGoogle, errorGoogle] = useSignInWithGoogle(auth);
     const handleGoogleSignIn = async () => {
         await signInWithGoogle();
-        navigate(from, { replace: true });
+        // navigate(from, { replace: true });
     };
 
     // email password register
     const [createUserWithEmailAndPassword, userEmail, loadingEmail, errorEmail] =
         useCreateUserWithEmailAndPassword(auth);
+
+    const [token] = useToken(userEmail || userGoogle);
 
     const handleResetPassword = () => {};
 
@@ -50,11 +53,17 @@ function Register() {
         await toast('A verification email sent!');
         await sendEmailVerification();
         await updateProfile({ displayName: name });
-        navigate(from, { replace: true });
+        //
     };
+
+    // token hook
 
     if (loadingEmail || loadingGoogle || updating) {
         return <Loading />;
+    }
+
+    if (userEmail || userGoogle) {
+        navigate(from, { replace: true });
     }
 
     return (
