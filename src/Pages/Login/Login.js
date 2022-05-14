@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     useSignInWithEmailAndPassword,
     // eslint-disable-next-line prettier/prettier
@@ -42,11 +42,13 @@ function Login() {
 
     const [token] = useToken(userGoogle || userEmail);
 
-    if (token) {
+    useEffect(() => {
         if (token) {
-            navigate(from, { replace: true });
+            if (token) {
+                navigate(from, { replace: true });
+            }
         }
-    }
+    }, [token, from, navigate]);
 
     // reset handleResetPassword
     // const [sendPasswordResetEmail] = useSendPasswordResetEmail(auth);

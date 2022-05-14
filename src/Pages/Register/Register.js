@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unused-vars */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     useCreateUserWithEmailAndPassword,
     useSendEmailVerification,
@@ -62,9 +63,13 @@ function Register() {
         return <Loading />;
     }
 
-    if (token) {
-        navigate(from, { replace: true });
-    }
+    useEffect(() => {
+        if (token) {
+            if (token) {
+                navigate(from, { replace: true });
+            }
+        }
+    }, [token, from, navigate]);
 
     return (
         <div className="w-full px-4 md:py-8">
