@@ -18,10 +18,31 @@ function Navbar() {
     return (
         <nav className="container mx-auto">
             <div className="navbar justify-between bg-base-100">
-                <div className="">
-                    <Link to="/" className="logo text-xl font-bold md:text-2xl ">
-                        Doctors Portal
-                    </Link>
+                <div>
+                    <label
+                        htmlFor="dashboard-sidebar"
+                        className="btn btn-ghost drawer-button lg:hidden"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M4 6h16M4 12h8m-8 6h16"
+                            />
+                        </svg>
+                    </label>
+                    <div className="">
+                        <Link to="/" className="logo text-xl font-bold md:text-2xl ">
+                            Doctors Portal
+                        </Link>
+                    </div>
                 </div>
                 <div className=" ">
                     <ul className="nav-link  hidden lg:flex">

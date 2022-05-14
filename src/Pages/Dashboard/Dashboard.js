@@ -5,16 +5,16 @@ import { Link, Outlet } from 'react-router-dom';
 function Dashboard() {
     return (
         <div className="drawer-mobile drawer">
-            <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content flex flex-col items-center justify-center">
-                <h2 className="text-5xl text-purple-500">Dashboard</h2>
+            <input id="dashboard-sidebar" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content ">
+                <h2 className="text-2xl font-bold text-purple-500">Welcome to your Dashboard</h2>
                 <Outlet />
-                <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">
+                {/* <label htmlFor="dashboard-sidebar" className="btn btn-primary drawer-button lg:hidden">
                     Open drawer
-                </label>
+                </label> */}
             </div>
             <div className="drawer-side">
-                <label htmlFor="my-drawer-2" className="drawer-overlay" />
+                <label htmlFor="dashboard-sidebar" className="drawer-overlay" />
                 <ul className="menu w-80 overflow-y-auto bg-base-100 p-4 text-base-content">
                     {/* <!-- Sidebar content here --> */}
                     <li>
