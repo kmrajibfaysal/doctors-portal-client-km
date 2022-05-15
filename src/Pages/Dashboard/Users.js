@@ -24,10 +24,17 @@ function Users() {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`,
             },
         })
-            .then((res) => res.json())
-            .then(() => {
-                refetch();
-                toast.success('Admin selected');
+            .then((res) => {
+                if (res.status === 403) {
+                    toast.error('Failed to create admin!');
+                }
+                return res.json();
+            })
+            .then((data) => {
+                if (data.modifiedCount > 0) {
+                    refetch();
+                    toast.success('Admin selected');
+                }
             });
     };
 
