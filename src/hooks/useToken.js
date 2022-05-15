@@ -6,7 +6,7 @@ const useToken = (user) => {
     useEffect(() => {
         //
         const email = user?.user?.email;
-        console.log(email);
+
         const currentUser = { email };
 
         if (email) {
@@ -17,7 +17,6 @@ const useToken = (user) => {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log('data inside useToken', data);
                     const accessToken = data.token;
                     localStorage.setItem('accessToken', accessToken);
                     setToken(accessToken);
