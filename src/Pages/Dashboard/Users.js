@@ -9,7 +9,7 @@ function Users() {
         data: users,
         refetch,
     } = useQuery('users', () =>
-        fetch('http://localhost:5000/user', {
+        fetch('https://doctors-portal-server-km.herokuapp.com/user', {
             method: 'GET',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -18,7 +18,7 @@ function Users() {
     );
 
     const makeAdmin = (email) => {
-        fetch(`http://localhost:5000/user/admin/${email}`, {
+        fetch(`https://doctors-portal-server-km.herokuapp.com/user/admin/${email}`, {
             method: 'PUT',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`,
