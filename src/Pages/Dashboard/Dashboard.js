@@ -40,9 +40,14 @@ function Dashboard() {
                     </li>
 
                     {admin && (
-                        <li>
-                            <Link to="/dashboard/users">All Users</Link>
-                        </li>
+                        <>
+                            <li>
+                                <Link to="/dashboard/users">All Users</Link>
+                            </li>
+                            <li>
+                                <Link to="/dashboard/addDoctor">Add Doctor</Link>
+                            </li>
+                        </>
                     )}
                 </ul>
             </div>

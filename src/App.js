@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import Appointment from './Pages/Appointment/Appointment';
+import AddDoctor from './Pages/Dashboard/AddDoctor';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import MyAppointments from './Pages/Dashboard/MyAppointments';
 import MyHistory from './Pages/Dashboard/MyHistory';
@@ -48,6 +49,14 @@ function App() {
                         element={
                             <RequireAdmin>
                                 <Users />
+                            </RequireAdmin>
+                        }
+                    />
+                    <Route
+                        path="addDoctor"
+                        element={
+                            <RequireAdmin>
+                                <AddDoctor />
                             </RequireAdmin>
                         }
                     />
