@@ -1,17 +1,18 @@
-/* eslint-disable react/no-array-index-key */
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
 import Loading from '../../Shared/Loading';
 
 function AddDoctor() {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm();
 
-    const [loading, setLoading] = useState(true);
+    /* const [loading, setLoading] = useState(true);
     const [services, setServices] = useState([]);
     useEffect(() => {
         fetch('http://localhost:5000/service')
@@ -20,13 +21,11 @@ function AddDoctor() {
                 setServices(data);
                 setLoading(false);
             });
-    }, [services]);
+    }, [services]); */
 
-    /* const { data: services, isLoading } = useQuery('services', () => {
-        fetch('http://localhost:5000/service').then((res) =>
-            res.json().then(() => console.log(services))
-        );
-    }); */
+    const { data: services, isLoading } = useQuery('services', () =>
+        fetch('http://localhost:5000/service').then((res) => res.json())
+    );
 
     const imageStorageKey = '74a3e1034fd4c0774454fa9d23740c5d';
 
@@ -36,16 +35,44 @@ function AddDoctor() {
         console.log(image);
 
         const formData = await new FormData();
-        await formData.append('doctor', image);
+        await formData.append('image', image);
         const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
         fetch(url, {
             method: 'POST',
             body: formData,
         })
             .then((res) => res.json())
-            .then((result) => console.log('imagebb result:', result));
+            .then((result) => {
+                if (result.success) {
+                    const img = result.data.url;
+                    const doctor = {
+                        name: data.name,
+                        email: data.email,
+                        specialty: data.specialty,
+                        img,
+                    };
+                    // sends data to server
+                    fetch('http://localhost:5000/doctor', {
+                        method: 'POST',
+                        headers: {
+                            'content-Type': 'application/json',
+                            authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                        },
+                        body: JSON.stringify(doctor),
+                    })
+                        .then((res) => res.json())
+                        .then((inserted) => {
+                            if (inserted.insertedId) {
+                                toast.success('Doctor added successfully.');
+                                reset();
+                            } else {
+                                toast.error('failed to add the doctor!');
+                            }
+                        });
+                }
+            });
     };
-    if (loading) {
+    if (isLoading) {
         return <Loading />;
     }
 
