@@ -19,9 +19,7 @@ function AvailableAppointment({ selected }) {
         data: services,
         refetch,
     } = useQuery(['available', selected], () =>
-        fetch(
-            `https://doctors-portal-server-km.herokuapp.com/available?date=${formattedDate}`
-        ).then((res) => res.json())
+        fetch(`http://localhost:5000/available?date=${formattedDate}`).then((res) => res.json())
     );
 
     if (isLoading) {
@@ -31,7 +29,7 @@ function AvailableAppointment({ selected }) {
     // old method
     // useEffect(() => {
     //     const formattedDate = format(selected, 'PP');
-    //     fetch(`https://doctors-portal-server-km.herokuapp.com/available?date=${formattedDate}`)
+    //     fetch(`http://localhost:5000/available?date=${formattedDate}`)
     //         .then((res) => res.json())
     //         .then((data) => setServices(data));
     // }, [selected]);

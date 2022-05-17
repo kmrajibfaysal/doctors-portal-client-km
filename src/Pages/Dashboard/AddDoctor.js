@@ -1,5 +1,8 @@
-import React from 'react';
+/* eslint-disable react/no-array-index-key */
+
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Loading from '../../Shared/Loading';
 
 function AddDoctor() {
     const {
@@ -8,7 +11,44 @@ function AddDoctor() {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => console.log(data);
+    const [loading, setLoading] = useState(true);
+    const [services, setServices] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:5000/service')
+            .then((res) => res.json())
+            .then((data) => {
+                setServices(data);
+                setLoading(false);
+            });
+    }, [services]);
+
+    /* const { data: services, isLoading } = useQuery('services', () => {
+        fetch('http://localhost:5000/service').then((res) =>
+            res.json().then(() => console.log(services))
+        );
+    }); */
+
+    const imageStorageKey = '74a3e1034fd4c0774454fa9d23740c5d';
+
+    const onSubmit = async (data) => {
+        console.log(data);
+        const image = data.image[0];
+        console.log(image);
+
+        const formData = await new FormData();
+        await formData.append('doctor', image);
+        const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
+        fetch(url, {
+            method: 'POST',
+            body: formData,
+        })
+            .then((res) => res.json())
+            .then((result) => console.log('imagebb result:', result));
+    };
+    if (loading) {
+        return <Loading />;
+    }
+
     return (
         <div className="mx-auto w-full max-w-[520px] rounded-xl  bg-white p-10 shadow">
             <h3 className="py-4 text-center text-xl font-bold text-accent">Add a new Doctor!</h3>
@@ -51,18 +91,34 @@ function AddDoctor() {
                     <label className="text-sm font-medium leading-none text-gray-800">
                         Specialty
                     </label>
+                    <select
+                        {...register('specialty')}
+                        name="time"
+                        className="select select-bordered my-3 w-full text-lg"
+                        defaultValue={services ? services.name : ''}
+                    >
+                        {services.map((service) => (
+                            <option key={service._id} defaultValue={service.name}>
+                                {service.name}
+                            </option>
+                        ))}
+                    </select>
+                    <p className="text-red-500">{errors.specialty?.message}</p>
+                </div>
+                <div>
+                    <label className="text-sm font-medium leading-none text-gray-800">Image</label>
                     <input
-                        {...register('specialty', {
-                            required: { value: true, message: 'Specialization is required!' },
+                        {...register('image', {
+                            required: { value: true, message: 'This is required!' },
                         })}
-                        aria-label="enter specialty"
+                        aria-label="enter image"
                         role="input"
-                        type="text"
+                        type="file"
                         className={`text-md mt-2 w-full rounded border
                                    border-gray-200
                                 bg-gray-100 py-3 pl-3 font-medium leading-none text-gray-800 focus:outline-none `}
                     />
-                    <p className="text-red-500">{errors.specialty?.message}</p>
+                    <p className="text-red-500">{errors.image?.message}</p>
                 </div>
 
                 <button
