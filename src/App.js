@@ -3,6 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import Appointment from './Pages/Appointment/Appointment';
 import AddDoctor from './Pages/Dashboard/AddDoctor';
 import Dashboard from './Pages/Dashboard/Dashboard';
+import ManageDoctors from './Pages/Dashboard/ManageDoctors';
 import MyAppointments from './Pages/Dashboard/MyAppointments';
 import MyHistory from './Pages/Dashboard/MyHistory';
 import MyReview from './Pages/Dashboard/MyReview';
@@ -57,6 +58,14 @@ function App() {
                         element={
                             <RequireAdmin>
                                 <AddDoctor />
+                            </RequireAdmin>
+                        }
+                    />
+                    <Route
+                        path="manageDoctors"
+                        element={
+                            <RequireAdmin>
+                                <ManageDoctors />
                             </RequireAdmin>
                         }
                     />

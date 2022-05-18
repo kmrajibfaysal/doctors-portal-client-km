@@ -30,9 +30,7 @@ function AddDoctor() {
     const imageStorageKey = '74a3e1034fd4c0774454fa9d23740c5d';
 
     const onSubmit = async (data) => {
-        console.log(data);
         const image = data.image[0];
-        console.log(image);
 
         const formData = await new FormData();
         await formData.append('image', image);

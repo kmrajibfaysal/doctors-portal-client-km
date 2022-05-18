@@ -81,7 +81,7 @@ function Navbar() {
                             )}
                         </li>
                     </ul>
-                    <div className="dropdown-end dropdown">
+                    <div className="dropdown-end dropdown ">
                         <label tabIndex="0" className="btn btn-ghost lg:hidden">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
